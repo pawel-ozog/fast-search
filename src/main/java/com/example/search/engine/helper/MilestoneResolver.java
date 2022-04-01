@@ -10,14 +10,18 @@ import java.util.SortedMap;
 @Slf4j
 public class MilestoneResolver {
 
+    /**
+     * Key is a word's length
+     * Value is a index of first word whose lenght's equal to key
+     * */
     private final SortedMap<Integer, Integer> milestones;
 
     private MilestoneResolver(final SortedMap<Integer, Integer> milestones) {
-        Assert.notNull(milestones, "milestones must not be null");
+        Assert.notNull(milestones, "milestones must not be null"); //throws exception if milestone is null
         this.milestones = milestones;
     }
 
-    public static MilestoneResolver of(SortedMap<Integer, Integer> milestones) {
+    public static MilestoneResolver of(SortedMap<Integer, Integer> milestones) { //of is a factory method
         return new MilestoneResolver(milestones);
     }
 
