@@ -2,6 +2,7 @@ package com.example.search.engine.strategy;
 
 import com.example.search.engine.model.LongWord;
 import com.example.search.engine.model.WordMatch;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.SortedMap;
@@ -17,6 +18,6 @@ public class MatchFirstStrategy implements WordMatchStrategy {
 
     @Override
     public Predicate<String> isEligibleForSearch(SortedMap<Integer, Integer> milestones) {
-        return w -> milestones.containsKey(w.length());
+        return w -> milestones.containsKey(StringUtils.length(w));
     }
 }
