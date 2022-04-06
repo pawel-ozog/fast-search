@@ -17,11 +17,11 @@ public class MilestoneResolver {
     private final SortedMap<Integer, Integer> milestones;
 
     private MilestoneResolver(final SortedMap<Integer, Integer> milestones) {
-        Assert.notNull(milestones, "milestones must not be null"); //throws exception if milestone is null
+        Assert.notNull(milestones, "milestones must not be null");
         this.milestones = milestones;
     }
 
-    public static MilestoneResolver of(SortedMap<Integer, Integer> milestones) { //of is a factory method
+    public static MilestoneResolver of(SortedMap<Integer, Integer> milestones) {
         return new MilestoneResolver(milestones);
     }
 
