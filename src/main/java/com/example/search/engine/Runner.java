@@ -39,6 +39,7 @@ public class Runner implements CommandLineRunner {
                 .map(longWord -> Tuple.of(longWord, new ContentReadService(FileContentSupplier.of(searchResource)).readLinesFromFile()))
                 .peek(tuple -> log.info("To match {}", tuple._2()))
                 .peek(tuple -> validator.validate(tuple._2))
+                .onFailure(input -> log.info(input.getMessage()))
                 .map(tuple -> wordMatchService.matchWords(tuple._1(), tuple._2()))
                 .onFailure(UnableToReadContentException.class, e -> log.error("Failed to perform search, unable to read content file, input ignored"))
                 .onFailure(IllegalArgumentException.class, e -> log.error("Failed to perform search, unable to process input data, input ignored"))
