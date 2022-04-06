@@ -25,7 +25,7 @@ public class WordMatchBuilder {
     }
 
     public WordMatch build() {
-        Assert.notNull(word, "wordSupplier must not be null");
+        Assert.hasText(word, "wordSupplier must not be null nor empty");
         Assert.notNull(milestone, "milestoneSupplier must not be null");
         Assert.notNull(content, "contentSupplier must not be null");
 

@@ -2,8 +2,10 @@ package com.example.search.engine.strategy;
 
 import com.example.search.engine.model.LongWord;
 import com.example.search.engine.model.WordMatch;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.SortedMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -18,12 +20,12 @@ public class MatchAllOccurrencesStrategy implements WordMatchStrategy {
 
     @Override
     public Predicate<String> isEligibleForSearch(SortedMap<Integer, Integer> milestones) {
-        return w -> w.length() <= milestones.lastKey();
+        return w -> StringUtils.length(w) > 0 && StringUtils.length(w) <= (milestones.isEmpty() ? 0 : milestones.lastKey());
     }
 
     @Override
     public Predicate<WordMatch> isEligibleForResult() {
-        return wm -> true;
+        return Objects::nonNull;
     }
 
     private Stream<WordMatch> recursiveMatch(final LongWord longWord, final WordMatch wordMatch) {

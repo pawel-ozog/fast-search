@@ -2,6 +2,7 @@ package com.example.search.engine.service;
 
 import com.example.search.engine.model.LongWord;
 import org.springframework.util.Assert;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,6 +31,7 @@ public class LongWordService {
                 .filter(not(String::isBlank))
                 .collect(Collectors.toSet())
                 .stream()
+                .map(StringUtils::trim)
                 .sorted(Comparator.comparingInt(String::length))
                 .reduce((a, b) -> a.concat(sDelimiter).concat(b))
                 .orElse("")

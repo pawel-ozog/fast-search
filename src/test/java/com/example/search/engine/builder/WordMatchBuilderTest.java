@@ -27,6 +27,7 @@ class WordMatchBuilderTest {
 
     private static Stream<Arguments> testExpectIllegalArgumentExceptionArguments() {
         return Stream.of(Arguments.of(new WordMatchBuilder().word(null).content("content#").milestone(0)),
+                Arguments.of(new WordMatchBuilder().word("").content("content#").milestone(0)),
                 Arguments.of(new WordMatchBuilder().word("word").content(null).milestone(0)),
                 Arguments.of(new WordMatchBuilder().word("word").content("content#").milestone(null)));
     }
