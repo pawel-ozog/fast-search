@@ -1,5 +1,8 @@
 # fast-search release notes
 
+# 0.0.3-SNAPSHOT
+[03] - Implemented input validation
+
 # 0.0.2-SNAPSHOT
 [02] - Correcting bugs, adding unit tests for search strategies.
 

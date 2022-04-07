@@ -10,6 +10,10 @@ import java.util.SortedMap;
 @Slf4j
 public class MilestoneResolver {
 
+    /**
+     * Key is a word's length
+     * Value is a index of first word whose lenght's equal to key
+     * */
     private final SortedMap<Integer, Integer> milestones;
 
     private MilestoneResolver(final SortedMap<Integer, Integer> milestones) {
