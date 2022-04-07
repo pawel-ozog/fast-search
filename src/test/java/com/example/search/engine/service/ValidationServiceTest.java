@@ -20,8 +20,6 @@ public class ValidationServiceTest {
     @MethodSource("provideInputLists")
     void testValidationException(List<String> input) {
         assertThrows(IllegalCharacterValidationException.class, () -> this.validationService.validate(input));
-        assertThrows(IllegalCharacterValidationException.class, () -> this.validationService.validate(input));
-        assertThrows(IllegalCharacterValidationException.class, () -> this.validationService.validate(input));
     }
 
     @Test
