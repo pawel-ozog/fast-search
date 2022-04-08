@@ -1,4 +1,4 @@
-package com.example.search.engine.contentsupplier;
+package com.example.search.engine.supplier;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,8 +1,7 @@
 package com.example.search.engine;
 
 import com.example.search.engine.exception.UnableToReadContentException;
-import com.example.search.engine.helper.FileContentSupplier;
-import com.example.search.engine.service.ContentReadService;
+import com.example.search.engine.supplier.FileContentSupplier;
 import com.example.search.engine.service.LongWordService;
 import com.example.search.engine.service.ValidationService;
 import com.example.search.engine.service.WordMatchService;
@@ -30,13 +29,13 @@ public class Runner implements CommandLineRunner {
         WordMatchService wordMatchService = new WordMatchService((WordMatchStrategy) Class.forName(args[2]).getDeclaredConstructor().newInstance());
         Validator validator = new ValidationService();
 
-        Try.of(() -> new ContentReadService(FileContentSupplier.of(inputResource)).readLinesFromFile())
+        Try.of(() -> FileContentSupplier.of(inputResource).supplyContent())
                 .peek(input -> log.info("Read input size {}", input.size()))
                 .peek(validator::validate)
                 .map(LongWordService::new)
                 .map(LongWordService::prepareLongWord)
                 .peek(longWord -> log.info("Long Word size {}, Prepared milestones {}", longWord.content().length(), longWord.milestones()))
-                .map(longWord -> Tuple.of(longWord, new ContentReadService(FileContentSupplier.of(searchResource)).readLinesFromFile()))
+                .map(longWord -> Tuple.of(longWord, (FileContentSupplier.of(searchResource).supplyContent())))
                 .peek(tuple -> log.info("To match {}", tuple._2()))
                 .peek(tuple -> validator.validate(tuple._2))
                 .onFailure(input -> log.info(input.getMessage()))
