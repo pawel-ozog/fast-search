@@ -1,5 +1,7 @@
 package com.example.search.engine.helper;
 
+import com.example.search.engine.supplier.FileContentSupplier;
+import com.example.search.engine.exception.UnableToReadContentException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -13,17 +15,17 @@ class FileContentSupplierTest {
 
     @Test
     void testExpectIllegalArgumentExceptionWhenNewSupplierCreated() {
-        assertThrows(IllegalArgumentException.class, () -> FileContentSupplier.of(null).apply());
+        assertThrows(IllegalArgumentException.class, () -> FileContentSupplier.of(null).supplyContent());
     }
 
     @Test
     void testExpectIOException() {
-        assertThrows(IOException.class, () -> FileContentSupplier.of("/wrong/path/to/file").apply());
+        assertThrows(UnableToReadContentException.class, () -> FileContentSupplier.of("/wrong/path/to/file").supplyContent());
     }
 
     @Test
     void testExpectInputListOfSizeTwo() throws IOException {
-        List<String> input = FileContentSupplier.of("src/test/resources").apply();
+        List<String> input = FileContentSupplier.of("src/test/resources").supplyContent();
         assertThat(input).hasSize(2).containsAll(Arrays.asList("name1", "name2"));
     }
 }
