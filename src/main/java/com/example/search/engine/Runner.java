@@ -7,6 +7,7 @@ import com.example.search.engine.service.LongWordService;
 import com.example.search.engine.service.ValidationService;
 import com.example.search.engine.service.WordMatchService;
 import com.example.search.engine.strategy.WordMatchStrategy;
+import com.example.search.engine.supplier.Source;
 import com.example.search.engine.validator.Validator;
 import io.vavr.Tuple;
 import io.vavr.control.Try;
@@ -28,22 +29,23 @@ public class Runner implements CommandLineRunner {
         final String searchResource = args[1];
         final String strategy = args[2];
 
-        match(inputResource,searchResource,strategy);
+           match(inputResource,searchResource,strategy);
     }
 
     private void match(String inputResource, String searchResource, String strategy) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         WordMatchService wordMatchService = new WordMatchService((WordMatchStrategy) Class.forName(strategy).getDeclaredConstructor().newInstance());
         Validator validator = new ValidationService();
 
-        ContentSupplier<String> supplier = new FileContentSupplier();
+        ContentSupplier supplier = new FileContentSupplier(new Source<>(inputResource));
 
-        Try.of(() -> supplier.supplyContent(inputResource))
+//        ContentSupplyService
+        Try.of(supplier::supplyContent)
                 .peek(input -> log.info("Read input size {}", input.size()))
                 .peek(validator::validate)
                 .map(LongWordService::new)
                 .map(LongWordService::prepareLongWord)
                 .peek(longWord -> log.info("Long Word size {}, Prepared milestones {}", longWord.content().length(), longWord.milestones()))
-                .map(longWord -> Tuple.of(longWord, (supplier.supplyContent(searchResource))))
+                .map(longWord -> Tuple.of(longWord, (supplier.supplyContent())))
                 .peek(tuple -> log.info("To match {}", tuple._2()))
                 .peek(tuple -> validator.validate(tuple._2))
                 .onFailure(input -> log.info(input.getMessage()))
