@@ -12,20 +12,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FileContentSupplierTest {
+    private final FileContentSupplier supplier = new FileContentSupplier();
+
 
     @Test
     void testExpectIllegalArgumentExceptionWhenNewSupplierCreated() {
-        assertThrows(IllegalArgumentException.class, () -> FileContentSupplier.of(null).supplyContent());
+        assertThrows(IllegalArgumentException.class, () -> supplier.supplyContent(null));
     }
 
     @Test
     void testExpectIOException() {
-        assertThrows(UnableToReadContentException.class, () -> FileContentSupplier.of("/wrong/path/to/file").supplyContent());
+        assertThrows(UnableToReadContentException.class, () -> supplier.supplyContent("/wrong/path/to/file"));
     }
 
     @Test
     void testExpectInputListOfSizeTwo() throws IOException {
-        List<String> input = FileContentSupplier.of("src/test/resources").supplyContent();
+        List<String> input = supplier.supplyContent("src/test/resources");
         assertThat(input).hasSize(2).containsAll(Arrays.asList("name1", "name2"));
     }
 }
