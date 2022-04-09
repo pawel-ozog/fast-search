@@ -14,8 +14,12 @@ public class FileContentSupplier implements ContentSupplier {
     public static final String INPUT_FILE_NAME = "input";
     private final Source<String> source;
 
-    public FileContentSupplier(Source<String> source) {
+    private FileContentSupplier(Source<String> source) {
         this.source = source;
+    }
+
+    public static FileContentSupplier of(Source<String> source){
+        return new FileContentSupplier(source);
     }
 
     @Override
