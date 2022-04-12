@@ -36,7 +36,7 @@ public class Runner implements CommandLineRunner {
         WordMatchService wordMatchService = new WordMatchService((WordMatchStrategy) Class.forName(strategy).getDeclaredConstructor().newInstance());
         Validator validator = new ValidationService();
 
-        ContentSupplier supplier = FileContentSupplier.of(new Source<>(inputResource));
+        ContentSupplier supplier = FileContentSupplier.of(inputResource);
 
         Try.of(supplier::supplyContent)
                 .peek(input -> log.info("Read input size {}", input.size()))
