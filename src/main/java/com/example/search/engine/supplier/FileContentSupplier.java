@@ -10,23 +10,22 @@ import java.nio.file.Path;
 import java.util.List;
 
 @Slf4j
-public class FileContentSupplier implements ContentSupplier {
+public class FileContentSupplier extends AbstractContentSupplier<String> implements ContentSupplier {
     public static final String INPUT_FILE_NAME = "input";
-    private final Source<String> source;
 
-    private FileContentSupplier(Source<String> source) {
-        this.source = source;
+    public FileContentSupplier(String source) {
+        super(source);
     }
 
-    public static FileContentSupplier of(Source<String> source){
+    public static FileContentSupplier of(String source) {
         return new FileContentSupplier(source);
     }
 
     @Override
     public List<String> supplyContent() {
-        Assert.notNull(source.getSource(),"source cannot be null");
-        return Try.of(()->Files.readAllLines(Path.of(source.getSource(),INPUT_FILE_NAME)))
-                .onFailure(e -> log.error("Cannot read file",e))
+        Assert.notNull(source, "source cannot be null");
+        return Try.of(() -> Files.readAllLines(Path.of(source, INPUT_FILE_NAME)))
+                .onFailure(e -> log.error("Cannot read file", e))
                 .getOrElseThrow(UnableToReadContentException::new);
     }
 }
