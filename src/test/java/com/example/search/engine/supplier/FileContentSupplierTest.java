@@ -1,8 +1,7 @@
-package com.example.search.engine.helper;
+package com.example.search.engine.supplier;
 
 import com.example.search.engine.supplier.FileContentSupplier;
 import com.example.search.engine.exception.UnableToReadContentException;
-import com.example.search.engine.supplier.Source;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -13,23 +12,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FileContentSupplierTest {
 
-
-
     @Test
     void testExpectIllegalArgumentExceptionWhenNewSupplierCreated() {
-        FileContentSupplier supplier = FileContentSupplier.of(new Source<>(null));
+        ContentSupplier supplier = ContentSupplierFactory.fileContentSupplier(()->"");
         assertThrows(IllegalArgumentException.class, supplier::supplyContent);
     }
 
     @Test
     void testExpectIOException() {
-        FileContentSupplier supplier = FileContentSupplier.of(new Source<>("/wrong/path/to/file"));
+        ContentSupplier supplier = ContentSupplierFactory.fileContentSupplier(()->"/wrong/path/to/file");
         assertThrows(UnableToReadContentException.class, supplier::supplyContent);
     }
 
     @Test
     void testExpectInputListOfSizeTwo() {
-        FileContentSupplier supplier = FileContentSupplier.of(new Source<>("src/test/resources"));
+        ContentSupplier supplier = ContentSupplierFactory.fileContentSupplier(()->"src/test/resources");
         List<String> input = supplier.supplyContent();
         assertThat(input).hasSize(2).containsAll(Arrays.asList("name1", "name2"));
     }
