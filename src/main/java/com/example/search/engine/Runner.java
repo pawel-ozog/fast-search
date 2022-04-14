@@ -3,7 +3,6 @@ package com.example.search.engine;
 import com.example.search.engine.exception.UnableToReadContentException;
 import com.example.search.engine.supplier.ContentSupplier;
 import com.example.search.engine.supplier.ContentSupplierFactory;
-import com.example.search.engine.supplier.FileContentSupplier;
 import com.example.search.engine.service.LongWordService;
 import com.example.search.engine.service.ValidationService;
 import com.example.search.engine.service.WordMatchService;
@@ -37,7 +36,7 @@ public class Runner implements CommandLineRunner {
         Validator validator = new ValidationService();
 
 
-        ContentSupplier supplier = ContentSupplierFactory.fileContentSupplier(() -> inputResource);
+        ContentSupplier supplier = ContentSupplierFactory.fileContentSupplier(inputResource);
 
         Try.of(supplier::supplyContent)
                 .peek(input -> log.info("Read input size {}", input.size()))

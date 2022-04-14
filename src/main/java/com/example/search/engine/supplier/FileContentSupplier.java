@@ -17,13 +17,8 @@ public class FileContentSupplier extends AbstractContentSupplier<String> impleme
         super(source);
     }
 
-    public static FileContentSupplier of(String source) {
-        return new FileContentSupplier(source);
-    }
-
     @Override
     public List<String> supplyContent() {
-        Assert.notNull(source, "source cannot be null");
         return Try.of(() -> Files.readAllLines(Path.of(source, INPUT_FILE_NAME)))
                 .onFailure(e -> log.error("Cannot read file", e))
                 .getOrElseThrow(UnableToReadContentException::new);

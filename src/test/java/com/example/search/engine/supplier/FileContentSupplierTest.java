@@ -14,19 +14,18 @@ class FileContentSupplierTest {
 
     @Test
     void testExpectIllegalArgumentExceptionWhenNewSupplierCreated() {
-        ContentSupplier supplier = ContentSupplierFactory.fileContentSupplier(()->"");
-        assertThrows(IllegalArgumentException.class, supplier::supplyContent);
+        assertThrows(IllegalArgumentException.class, () -> new FileContentSupplier(""));
     }
 
     @Test
     void testExpectIOException() {
-        ContentSupplier supplier = ContentSupplierFactory.fileContentSupplier(()->"/wrong/path/to/file");
+        ContentSupplier supplier = ContentSupplierFactory.fileContentSupplier("/wrong/path/to/file");
         assertThrows(UnableToReadContentException.class, supplier::supplyContent);
     }
 
     @Test
     void testExpectInputListOfSizeTwo() {
-        ContentSupplier supplier = ContentSupplierFactory.fileContentSupplier(()->"src/test/resources");
+        ContentSupplier supplier = ContentSupplierFactory.fileContentSupplier("src/test/resources");
         List<String> input = supplier.supplyContent();
         assertThat(input).hasSize(2).containsAll(Arrays.asList("name1", "name2"));
     }
