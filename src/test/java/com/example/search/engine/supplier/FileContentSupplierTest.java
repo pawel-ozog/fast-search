@@ -14,7 +14,7 @@ class FileContentSupplierTest {
 
     @Test
     void testExpectIllegalArgumentExceptionWhenNewSupplierCreated() {
-        assertThrows(IllegalArgumentException.class, () -> new FileContentSupplier(""));
+        assertThrows(IllegalArgumentException.class, () -> new FileContentSupplier(null));
     }
 
     @Test
