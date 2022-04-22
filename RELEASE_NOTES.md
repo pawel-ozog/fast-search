@@ -1,5 +1,11 @@
 # fast-search release notes
 
+# 0.0.5-SNAPSHOT
+[05] - Fixed file content supplier unit test
+
+# 0.0.4-SNAPSHOT
+[04] - Created content supplier factory
+
 # 0.0.3-SNAPSHOT
 [03] - Implemented input validation
 
