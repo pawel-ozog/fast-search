@@ -1,5 +1,8 @@
 # fast-search release notes
 
+# 0.0.4-SNAPSHOT
+[04] - Implemented properties handling
+
 # 0.0.3-SNAPSHOT
 [03] - Implemented input validation
 
