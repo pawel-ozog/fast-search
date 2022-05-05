@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.pawel</groupId>
 	<artifactId>search-engine</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>search-engine</name>
 	<description>Fast Search Engine</description>
 	<properties>
